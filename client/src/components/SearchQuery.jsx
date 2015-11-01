@@ -1,6 +1,8 @@
 var React = require('react');
 var moment = require('moment');
 
+var timeSearchUrl = 'http://127.0.0.1:3000/timeSearch';
+
 var SearchQuery = React.createClass({
 
   //Action that is triggered once user hits login. 
@@ -37,6 +39,19 @@ var SearchQuery = React.createClass({
       var unixStart = new Date(startInput).getTime()/1000;
       var unixEnd = new Date(endInput).getTime()/1000;
       console.log(unixStart, unixEnd);
+      $.ajax({
+        type: 'POST',
+        url: timeSearchUrl,
+        contentType: 'application/json',
+        data: JSON.stringify({
+          startTime: unixStart,
+          endTime: unixEnd,
+          tag: tagInput
+        }),
+        success: function(data) {
+          console.log(data);
+        }
+      })
 
     }
 
