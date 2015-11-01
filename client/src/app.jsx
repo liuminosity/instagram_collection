@@ -38,21 +38,29 @@ var App = React.createClass({
     // }
   },
 
-  updateImages: function updateImages(data, paginationURL) {
+  nextPageData: [],
+
+  updateImages: function updateImages(data) {
     this.setState({
       searchData: data,
-      paginationURL: paginationURL
     });
+  },
+
+  cachePagination: function cachePagination(data, paginationURL) {
+    this.setState({
+      nextPageData: data,
+      paginationURL: paginationURL
+    })
   },
 
   //Block that displays the Login Button component if the user is not logged in, else displays nothing
   LoginButtonBlock: function LoginButtonBlock() {
-    return this.state.userIsAuthenticated ? <SearchQuery token={this.state.token} callback={this.updateImages}/>: <LoginButton />;
+    return this.state.userIsAuthenticated ? <SearchQuery token={this.state.token} updateImages={this.updateImages} cachePagination={this.cachePagination}/>: <LoginButton />;
   },
 
   //Block that displays images if the user has requested something, else displays nothing
   ImagesBlock: function ImagesBlock() {
-    return this.state.userIsAuthenticated ? <div><ImageList imageData={this.state.searchData} paginationURL={this.state.paginationURL} callback={this.updateImages}/></div> : <div/>;
+    return this.state.userIsAuthenticated ? <div><ImageList imageData={this.state.searchData} nextPageData={this.state.nextPageData} paginationURL={this.state.paginationURL} updateImages={this.updateImages} cachePagination={this.cachePagination}/></div> : <div/>;
   },
 
   render: function render() {

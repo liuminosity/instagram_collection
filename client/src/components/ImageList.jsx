@@ -6,20 +6,24 @@ var ImageList = React.createClass({
 
   handlePagination: function handlePagination() {
     var _this = this;
-    console.log('loading...');
+    this.props.updateImages(this.props.nextPageData);
     $.ajax({
       url: this.props.paginationURL,
       dataType: "jsonp",
       success: function(data) {
-        console.log('yay data');
-        _this.props.callback(data.data, data.pagination.next_url);
+        _this.props.cachePagination(data.data, data.pagination.next_url);
       }
     })
   },
 
   removeImage: function removeImage(index) {
     this.props.imageData.splice(index, 1);
-    this.props.callback(this.props.imageData);
+    this.props.updateImages(this.props.imageData);
+  },
+
+  MoreImagesBlock: function MoreImagesBlock() {
+    return this.props.paginationURL === '' || this.props.paginationURL === undefined ? <div/> : <span onClick={this.handlePagination} style={{'position': 'absolute', 'bottom': '0', 'cursor':'pointer'}}> More images... </span>; 
+
   },
 
   render: function render() {
@@ -34,7 +38,7 @@ var ImageList = React.createClass({
       <div style={{'width':'95%', 'marginLeft':'2.5%'}}>
         {imageArray}
         <div style={{'position': 'relative', 'marginTop':'2%'}}>
-          <span onClick={this.handlePagination} style={{'position': 'absolute', 'bottom': '0', 'cursor':'pointer'}}> More images... </span> 
+          { this.MoreImagesBlock() }
         </div>
       </div>
       );

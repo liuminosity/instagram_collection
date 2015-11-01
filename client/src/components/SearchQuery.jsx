@@ -16,8 +16,15 @@ var SearchQuery = React.createClass({
       url: apiQuery,
       dataType: "jsonp",
       success: function(data) {
-        console.log(data);
-        _this.props.callback(data.data, data.pagination.next_url);
+        _this.props.updateImages(data.data);
+        $.ajax({
+          url: data.pagination.next_url,
+          dataType: "jsonp",
+          success: function(nextData) {
+            console.log(nextData);
+            _this.props.cachePagination(nextData.data, nextData.pagination.next_url)
+          }
+        })
       }
     })
 
