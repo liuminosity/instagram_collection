@@ -20,6 +20,7 @@ var App = React.createClass({
         userIsAuthenticated: true,
         token: token,
         searchData: [],
+        paginationURL: '',
       })
     }
 
@@ -37,8 +38,11 @@ var App = React.createClass({
     // }
   },
 
-  updateImages: function updateImages(data) {
-    this.setState({searchData: data});
+  updateImages: function updateImages(data, paginationURL) {
+    this.setState({
+      searchData: data,
+      paginationURL: paginationURL
+    });
   },
 
   //Block that displays the Login Button component if the user is not logged in, else displays nothing
@@ -48,7 +52,7 @@ var App = React.createClass({
 
   //Block that displays images if the user has requested something, else displays nothing
   ImagesBlock: function ImagesBlock() {
-    return this.state.userIsAuthenticated ? <div><ImageList imageData={this.state.searchData} callback={this.updateImages}/></div> : <div/>;
+    return this.state.userIsAuthenticated ? <div><ImageList imageData={this.state.searchData} paginationURL={this.state.paginationURL} callback={this.updateImages}/></div> : <div/>;
   },
 
   render: function render() {

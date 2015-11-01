@@ -17,7 +17,7 @@ var SearchQuery = React.createClass({
       dataType: "jsonp",
       success: function(data) {
         console.log(data);
-        _this.props.callback(data.data);
+        _this.props.callback(data.data, data.pagination.next_url);
       }
     })
 
