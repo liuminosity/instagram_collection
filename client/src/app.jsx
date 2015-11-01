@@ -48,14 +48,13 @@ var App = React.createClass({
 
   //Block that displays images if the user has requested something, else displays nothing
   ImagesBlock: function ImagesBlock() {
-    return this.state.userIsAuthenticated ? <div> IMAGES HERE {this.state.searchData.length} <ImageList imageData={this.state.searchData}/></div> : <div/>;
+    return this.state.userIsAuthenticated ? <div><ImageList imageData={this.state.searchData} callback={this.updateImages}/></div> : <div/>;
   },
 
   render: function render() {
     return (
       <div>
         <h1>Instagram Collector </h1>
-        <div> Sup world </div>
         { this.LoginButtonBlock() }
         { this.ImagesBlock() }
       </div>
