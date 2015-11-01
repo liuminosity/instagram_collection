@@ -1,4 +1,5 @@
 var React = require('react');
+var moment = require('moment');
 
 var SearchQuery = React.createClass({
 
@@ -7,26 +8,37 @@ var SearchQuery = React.createClass({
     var _this = this;
     event.preventDefault();
 
-    var input = React.findDOMNode(this.refs.tags).value;
+    var tagInput = React.findDOMNode(this.refs.tags).value;
+    var startInput = React.findDOMNode(this.refs.start).value;
+    var endInput = React.findDOMNode(this.refs.end).value;
 
-    var apiQuery = 'https://api.instagram.com/v1/tags/' + input + '/media/recent?access_token=' + this.props.token;
-    // console.log(apiQuery);
+    if (tagInput === '') {
+      console.log('please input a tag'); 
+    } else if (startInput === '' || endInput === '') {
+      var apiQuery = 'https://api.instagram.com/v1/tags/' + tagInput + '/media/recent?access_token=' + this.props.token;
+      // console.log(apiQuery);
 
-    $.ajax({
-      url: apiQuery,
-      dataType: "jsonp",
-      success: function(data) {
-        _this.props.updateImages(data.data);
-        $.ajax({
-          url: data.pagination.next_url,
-          dataType: "jsonp",
-          success: function(nextData) {
-            console.log(nextData);
-            _this.props.cachePagination(nextData.data, nextData.pagination.next_url)
-          }
-        })
-      }
-    })
+      $.ajax({
+        url: apiQuery,
+        dataType: "jsonp",
+        success: function(data) {
+          _this.props.updateImages(data.data);
+          $.ajax({
+            url: data.pagination.next_url,
+            dataType: "jsonp",
+            success: function(nextData) {
+              console.log(nextData);
+              _this.props.cachePagination(nextData.data, nextData.pagination.next_url)
+            }
+          })
+        }
+      })
+    } else {
+      var unixStart = new Date(startInput).getTime()/1000;
+      var unixEnd = new Date(endInput).getTime()/1000;
+      console.log(unixStart, unixEnd);
+
+    }
 
     //https://api.instagram.com/v1/tags/{tag-name}/media/recent?access_token=ACCESS-TOKEN
 
@@ -34,11 +46,21 @@ var SearchQuery = React.createClass({
   },
 
   render: function render() {
+    var dateToday = moment().format().slice(0,10);
+    var dateYesterday = moment().subtract(1, 'day').format().slice(0,10);
     return (
       <div>
         <form onSubmit={this.handleFormSubmit}>
-          <input style={{'width': '40%'}} type="text" placeholder="What tag do you want to search?" ref="tags" />
-          <input type="submit" value="Submit" />
+          <input style={{'width': '40%'}} type="text" placeholder="What tag do you want to search?" ref="tags" /><br/>
+          <div style={{'marginTop': '1%'}}>
+            Timeframe: (optional--leave blank for all recent media): <br/>
+            Start date:
+            <input style={{'width': '20%'}} type="date" max={dateYesterday} ref="start" />
+            End date:
+            <input style={{'width': '20%'}} type="date" max={dateToday} ref="end" />
+            <input type="submit" value="Submit" />
+          </div>
+
         </form>
       </div>
       );
