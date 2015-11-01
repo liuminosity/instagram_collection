@@ -5,9 +5,15 @@ var LoginButton = React.createClass({
 
   //Action that is triggered once user hits login. 
   submitLogin: function submitLogin() {
-    console.log('hello');
-    // window.location.assign();
+    var instagramLoginUrl = 'https://api.instagram.com/oauth/authorize/?' + 
+      'client_id=' + instagramAuth.clientID +
+      '&redirect_uri=' + instagramAuth.redirectURL +
+      '&response_type=token';
+    // console.log(instagramLoginUrl);
+    window.location.assign(instagramLoginUrl);
 
+
+    //https://api.instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=code
 
   },
 
