@@ -77,13 +77,16 @@ var App = React.createClass({
 
   //Block that displays the Login Button component if the user is not logged in, else displays nothing
   LoginButtonBlock: function LoginButtonBlock() {
-    return this.state.userIsAuthenticated ? <SearchQuery token={this.state.token} updateImages={this.updateImages} cachePagination={this.cachePagination}/>: <LoginButton />;
+    return this.state.userIsAuthenticated ? <div/> : <LoginButton />;
   },
 
   //Block that displays images if the user has requested something, else displays nothing
   ImagesBlock: function ImagesBlock() {
     return this.state.userIsAuthenticated && this.state.currentPage === 'home' ? 
-    <div><ImageList imageData={this.state.searchData} nextPageData={this.state.nextPageData} paginationURL={this.state.paginationURL} updateImages={this.updateImages} cachePagination={this.cachePagination}/></div> : <div/>;
+    <div>
+      <SearchQuery token={this.state.token} updateImages={this.updateImages} cachePagination={this.cachePagination}/>
+      <ImageList imageData={this.state.searchData} nextPageData={this.state.nextPageData} paginationURL={this.state.paginationURL} updateImages={this.updateImages} cachePagination={this.cachePagination}/>
+    </div> : <div/>;
   },
 
   CollectionsViewBlock: function CollectionsViewBlock() {
