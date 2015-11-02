@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var db = require('./database');
-var pg = require('pg');
+// var pg = require('pg');
 
 var app = express();
 
@@ -14,8 +14,9 @@ app.get('/', function(req, res) {
 })
 
 app.post('/timeSearch', function(req, res) {
-  console.log(req.body);
-  res.send('sup');
+  db.queryInstagram(req.body, function(result) {
+    res.send(result);
+  });
 })
 
 app.get('/db', function(req, res) {

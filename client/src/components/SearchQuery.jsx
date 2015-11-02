@@ -49,7 +49,7 @@ var SearchQuery = React.createClass({
           tag: tagInput
         }),
         success: function(data) {
-          console.log(data);
+          _this.props.updateImages(data)
         }
       })
 
