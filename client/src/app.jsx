@@ -3,6 +3,7 @@ var React = require('react');
 var LoginButton = require('./components/LoginButton');
 var SearchQuery = require('./components/SearchQuery');
 var ImageList = require('./components/ImageList');
+var CollectionCacheList = require('./components/CollectionCacheList');
 
 var App = React.createClass({
 
@@ -110,13 +111,9 @@ var App = React.createClass({
 
   CollectionsViewBlock: function CollectionsViewBlock() {
     return this.state.currentPage === 'collections' ? 
-      <div> <ImageList 
-        imageData={this.state.collectionCache} 
-        nextPageData={this.state.nextPageData} 
-        paginationURL={this.state.paginationURL} 
-        updateImages={this.updateImages} 
-        cacheToCollection={null}
-        cachePagination={null}/>
+      <div> 
+        <CollectionCacheList 
+          imageData={this.state.collectionCache} />
       </div> : <div/>;
   },
 
