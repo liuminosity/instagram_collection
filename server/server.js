@@ -5,6 +5,8 @@ var pg = require('pg');
 
 var app = express();
 
+app.set('view engine', 'ejs');
+
 app.use(express.static(__dirname + '/../client'));
 
 app.use(bodyParser.json());
