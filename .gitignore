@@ -26,5 +26,4 @@ project.xcworkspace
 #
 node_modules/
 npm-debug.log
-instagramAuth.js
 server/database.db
