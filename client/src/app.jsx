@@ -4,6 +4,7 @@ var LoginButton = require('./components/LoginButton');
 var SearchQuery = require('./components/SearchQuery');
 var ImageList = require('./components/ImageList');
 var CollectionCacheList = require('./components/CollectionCacheList');
+var AddCollection = require('./components/AddCollection');
 
 var App = React.createClass({
 
@@ -58,6 +59,12 @@ var App = React.createClass({
     })
   },
 
+  clearCollectionCache: function clearCollectionCache() {
+    this.setState({
+      collectionCache: []
+    })
+  },
+
   cachePagination: function cachePagination(data, paginationURL) {
     this.setState({
       nextPageData: data,
@@ -94,24 +101,28 @@ var App = React.createClass({
   //Block that displays images if the user has requested something, else displays nothing
   ImagesBlock: function ImagesBlock() {
     return this.state.userIsAuthenticated && this.state.currentPage === 'home' ? 
-    <div>
-      <SearchQuery 
-        token={this.state.token} 
-        updateImages={this.updateImages} 
-        cachePagination={this.cachePagination}/>
-      <ImageList 
-        imageData={this.state.searchData} 
-        nextPageData={this.state.nextPageData} 
-        paginationURL={this.state.paginationURL} 
-        updateImages={this.updateImages} 
-        cacheToCollection={this.cacheToCollection}
-        cachePagination={this.cachePagination}/>
-    </div> : <div/>;
+      <div>
+        <SearchQuery 
+          token={this.state.token} 
+          updateImages={this.updateImages} 
+          cachePagination={this.cachePagination}/>
+        <ImageList 
+          imageData={this.state.searchData} 
+          nextPageData={this.state.nextPageData} 
+          paginationURL={this.state.paginationURL} 
+          updateImages={this.updateImages} 
+          cacheToCollection={this.cacheToCollection}
+          cachePagination={this.cachePagination}/>
+      </div> : <div/>;
   },
 
   CollectionsViewBlock: function CollectionsViewBlock() {
     return this.state.currentPage === 'collections' ? 
       <div> 
+        <AddCollection 
+          token={this.state.token} 
+          collectionCache={this.state.collectionCache}
+          clearCollectionCache={this.clearCollectionCache}/>
         <CollectionCacheList 
           imageData={this.state.collectionCache} />
       </div> : <div/>;

@@ -25,7 +25,10 @@ var addCollection = function addCollection(body, cb) {
   var collectionName = body.collectionName;
   User.findOne({'accessToken':accessToken}, 'collections', function(err, data) {
     if (err) {
-      cb('error' + err);
+      cb({
+        status: 'Error',
+        error: err
+      });
     } else {
       if (data) {
         User.update({'accessToken':accessToken}, {$push: {'collections': {
@@ -35,7 +38,10 @@ var addCollection = function addCollection(body, cb) {
           if (err) {
             console.log(err);
           } else {
-            cb('added new collection')
+            cb({
+              status: 'Success',
+              message: 'Added new collection to existing user'
+            })
           }
         })
       } else {
@@ -50,7 +56,10 @@ var addCollection = function addCollection(body, cb) {
           if (err) {
             cb('error' + err);
           } else {
-            cb('added new user and collection');
+            cb({
+              status: 'Success',
+              message: 'New user detected, added user and new collection'
+            });
           }
         })
         
