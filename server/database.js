@@ -1,4 +1,20 @@
-var sqlite3 = require('sqlite3').verbose();
-var path = require('path');
-var dbFile = path.join(__dirname + '/emails.db');
-var db = exports.db = new sqlite3.Database(dbFile);
+var pg = require('pg');
+
+var viewDatabase = function viewDatabase(cb) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROm test_table', function(err, result) {
+      done();
+      if (err) {
+        console.log(err);
+        cb('Error: ' + err);
+      } else {
+        console.log(result);
+        cb(result);
+      }
+    })
+  })
+}
+
+module.exports = {
+  viewDatabase
+}
