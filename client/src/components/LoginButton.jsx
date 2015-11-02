@@ -9,8 +9,7 @@ var LoginButton = React.createClass({
       'client_id=' + instagramAuth.clientID +
       '&redirect_uri=' + instagramAuth.redirectURL +
       '&response_type=token';
-    console.log(instagramLoginUrl);
-    // window.location.assign(instagramLoginUrl);
+    window.location.assign(instagramLoginUrl);
 
 
     //https://api.instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=code
