@@ -5,6 +5,7 @@ var SearchQuery = require('./components/SearchQuery');
 var ImageList = require('./components/ImageList');
 var CollectionCacheList = require('./components/CollectionCacheList');
 var AddCollection = require('./components/AddCollection');
+var CollectionsList = require('./components/CollectionsList');
 
 var App = React.createClass({
 
@@ -42,8 +43,6 @@ var App = React.createClass({
     // }
   },
 
-  nextPageData: [],
-
   updateImages: function updateImages(data) {
     this.setState({
       searchData: data
@@ -53,7 +52,6 @@ var App = React.createClass({
   cacheToCollection: function cacheToCollection(imageData) {
     var collection = this.state.collectionCache;
     collection.push(imageData);
-    console.log('this is collection:', collection)
     this.setState({
       collectionCache: collection
     })
@@ -72,9 +70,22 @@ var App = React.createClass({
     })
   },
 
+  storeCollections: function storeCollections(data) {
+    console.log(data);
+    this.setState({
+      collections: data
+    })
+  },
+
   changeTabToHome: function changeTabToHome() {
     if (this.state.currentPage !== 'home') {
       this.setState({currentPage: 'home'});
+    }
+  },
+
+  changeTabToAddCollection: function changeTabToAddCollection() {
+    if (this.state.currentPage !== 'addCollection') {
+      this.setState({currentPage: 'addCollection'});
     }
   },
 
@@ -86,9 +97,10 @@ var App = React.createClass({
 
   TabsBlock: function TabsBlock() {
     return this.state.userIsAuthenticated ? 
-      <div style={{'width':'40%', 'marginLeft':'20%', 'marginBottom':'5%'}}>
-        <span onClick={this.changeTabToHome} style={{cursor:'pointer', 'float':'left'}}>Home</span>
-        <span onClick={this.changeTabToCollections} style={{cursor:'pointer', 'float':'right'}}>Collections</span>
+      <div style={{'width':'60%', 'marginLeft':'20%', 'marginBottom':'5%'}}>
+        <span onClick={this.changeTabToHome} style={{cursor:'pointer', 'marginLeft':'14%', 'marginRight':'14%'}}>Home</span>
+        <span onClick={this.changeTabToAddCollection} style={{cursor:'pointer', 'marginLeft':'14%', 'marginRight':'14%'}}>Images to be saved</span>
+        <span onClick={this.changeTabToCollections} style={{cursor:'pointer', 'marginLeft':'14%', 'marginRight':'14%'}}>Collections</span>
       </div> :
       <div/>;
   },  
@@ -116,8 +128,8 @@ var App = React.createClass({
       </div> : <div/>;
   },
 
-  CollectionsViewBlock: function CollectionsViewBlock() {
-    return this.state.currentPage === 'collections' ? 
+  AddCollectionsViewBlock: function AddCollectionsViewBlock() {
+    return this.state.currentPage === 'addCollection' ? 
       <div> 
         <AddCollection 
           token={this.state.token} 
@@ -128,6 +140,15 @@ var App = React.createClass({
       </div> : <div/>;
   },
 
+  CollectionsViewBlock: function CollectionsViewBlock() {
+    return this.state.currentPage === 'collections' ?
+      <div> 
+        <CollectionsList
+          storeCollections={this.storeCollections}
+          token={this.state.token}/>
+      </div> : <div/>;
+  },
+
   render: function render() {
     return (
       <div>
@@ -135,6 +156,7 @@ var App = React.createClass({
         { this.TabsBlock() }
         { this.LoginButtonBlock() }
         { this.ImagesBlock() }
+        { this.AddCollectionsViewBlock() }
         { this.CollectionsViewBlock() }
       </div>
       )

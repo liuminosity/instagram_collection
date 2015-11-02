@@ -74,7 +74,6 @@ var getCollections = function getCollections(body, cb) {
     if (err) {
       console.log('error:', err)
     } else {
-      // console.log(collections)
       cb(collections)
     }
   })
