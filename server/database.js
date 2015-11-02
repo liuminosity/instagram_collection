@@ -1,22 +1,100 @@
-var pg = require('pg');
+// var pg = require('pg');
 var request = require('request');
 var moment = require('moment');
 var auth = require('../instagramAuth.js');
+var User = require('./models/userModel');
 
+// var viewDatabase = function viewDatabase(cb) {
+//   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+//     client.query('SELECT * FROM test_table', function(err, result) {
+//       done();
+//       if (err) {
+//         console.log(err);
+//         cb('Error: ' + err);
+//       } else {
+//         console.log(result);
+//         cb(result);
+//       }
+//     })
+//   })
+// }
 
-var viewDatabase = function viewDatabase(cb) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
-      if (err) {
-        console.log(err);
-        cb('Error: ' + err);
+var addCollection = function addCollection(body, cb) {
+  var accessToken = body.accessToken;
+  var collectionData = body.collectionData;
+  var collectionName = body.collectionName;
+  User.findOne({'accessToken':accessToken}, 'collections', function(err, data) {
+    if (err) {
+      cb('error' + err);
+    } else {
+      if (data) {
+        User.update({'accessToken':accessToken}, {$push: {'collections': {
+          collectionName: collectionName,
+          data: collectionData
+        }}},{upsert:true}, function(err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            cb('added new collection')
+          }
+        })
       } else {
-        console.log(result);
-        cb(result);
-      }
-    })
+        var newUser = new User({
+          accessToken: accessToken,
+          collections: [{
+            collectionName: collectionName,
+            data: collectionData
+          }]
+        });
+        newUser.save(function(err, user) {
+          if (err) {
+            cb('error' + err);
+          } else {
+            cb('added new user and collection');
+          }
+        })
+        
+      } 
+    }
   })
+}
+
+var getCollections = function getCollections(body, cb) {
+  var accessToken = body.accessToken;
+  User.findOne({'accessToken':accessToken}, 'collections', function(err, collections) {
+    if (err) {
+      console.log('error:', err)
+    } else {
+      // console.log(collections)
+      cb(collections)
+    }
+  })
+}
+
+var deleteCollections = function deleteCollections(body, cb) {
+  var accessToken = body.accessToken;
+  User.remove({'accessToken':accessToken}, function(err, result) {
+    if (err) {
+      console.log('error:', err)
+    } else {
+      // console.log(collections)
+      cb('deleted')
+    }
+  })
+}
+
+//temporarily not used
+var addToCollection = function addToCollection(body, cb) {
+  var accessToken = body.accessToken;
+  var collectionName = body.collectionName;
+  var imageData = body.imageData;
+  User.update({'accessToken':accessToken}, {$push: {'collections.data': imageData}}, {upsert:true, function(err, data) {
+    if (err) {
+      console.log(err);
+    } else {
+      cb('added into collection' + collectionName);
+    }
+  }})
 }
 
 var queryInstagram = function queryInstagram(body, cb) {
@@ -70,28 +148,14 @@ var queryInstagram = function queryInstagram(body, cb) {
     })
   };
   recursiveQuery(apiQuery);
-
-
-  // request.get(apiQuery, function(err, res, body) {
-  //   var parsedBody = JSON.parse(body);
-  //   var dataArray = parsedBody.data;
-  //   for (var i = 0; i < dataArray.length; i++) {
-  //     if (dataArray[i].created_time < endTime) {
-  //       if (dataArray[i].created_time > startTime) {
-  //         console.log('time after start:', dataArray[i].created_time - startTime, 'and time before end:', endTime - dataArray[i].created_time)
-  //         imageArray.push(dataArray[i]);
-  //       } else {
-  //         endOfRequest = true;
-  //         break;
-  //       }
-  //     }
-  //   }
-    // console.log(dataArray.length, imageArray.length);
-    
 }
 
 
 module.exports = {
-  viewDatabase,
+  // viewDatabase,
+  addCollection,
+  getCollections,
+  deleteCollections,
+  addToCollection,
   queryInstagram
 }
