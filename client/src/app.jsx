@@ -21,6 +21,7 @@ var App = React.createClass({
         token: token,
         searchData: [],
         paginationURL: '',
+        currentPage: 'home'
       })
     }
 
@@ -60,7 +61,12 @@ var App = React.createClass({
 
   //Block that displays images if the user has requested something, else displays nothing
   ImagesBlock: function ImagesBlock() {
-    return this.state.userIsAuthenticated ? <div><ImageList imageData={this.state.searchData} nextPageData={this.state.nextPageData} paginationURL={this.state.paginationURL} updateImages={this.updateImages} cachePagination={this.cachePagination}/></div> : <div/>;
+    return this.state.userIsAuthenticated && this.state.currentPage === 'home' ? 
+    <div><ImageList imageData={this.state.searchData} nextPageData={this.state.nextPageData} paginationURL={this.state.paginationURL} updateImages={this.updateImages} cachePagination={this.cachePagination}/></div> : <div/>;
+  },
+
+  CollectionsViewBlock: function CollectionsViewBlock() {
+    return this.state.currentPage === 'collections' ? <div> collections here </div> : <div/>;
   },
 
   render: function render() {
@@ -69,6 +75,7 @@ var App = React.createClass({
         <h1>Instagram Collector </h1>
         { this.LoginButtonBlock() }
         { this.ImagesBlock() }
+        { this.CollectionsViewBlock() }
       </div>
       )
   },
