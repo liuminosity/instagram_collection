@@ -1,10 +1,12 @@
 var pg = require('pg');
 var request = require('request');
+var moment = require('moment');
 var auth = require('../instagramAuth.js');
+
 
 var viewDatabase = function viewDatabase(cb) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROm test_table', function(err, result) {
+    client.query('SELECT * FROM test_table', function(err, result) {
       done();
       if (err) {
         console.log(err);
@@ -25,22 +27,31 @@ var queryInstagram = function queryInstagram(body, cb) {
   var imageArray = [];
   var apiQuery = 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?access_token=' + accessToken;
   var endOfRequest = false;
-  var counter = 0;
+  
+  //Variables to ensure user doesn't use too many requests for one search. Realistically, requestLimit would be higher (~100)
+  var requestCounter = 0;
+  var requestLimit = 10;
+
   var recursiveQuery = function recursiveQuery(queryString) {
-    counter++;
-    console.log('this is counter', counter, 'with queryString', queryString);
-    if (counter >= 3) {
-      cb(imageArray);
+    requestCounter++;
+    console.log('this is requestCounter', requestCounter, 'with queryString', queryString);
+    if (requestCounter >= 3) {
+      var message = imageArray.length === 0 ? 'No results found within API call limit, please expand date range' : 
+        'API call due to internal limit. Recommend re-rerunning your search with new end date of ' + moment.unix(imageArray[imageArray.length-1].created_time).format().slice(0,10);
+      cb({
+        data: imageArray,
+        message: message
+      });
       return;
     }
     request.get(queryString, function(err, res, body) {
       var parsedBody = JSON.parse(body);
       var dataArray = parsedBody.data;
       for (var i = 0; i < dataArray.length; i++) {
-        console.log('time after start:', dataArray[i].created_time - startTime, 'and time before end:', endTime - dataArray[i].created_time)
+        // console.log('time after start:', dataArray[i].created_time - startTime, 'and time before end:', endTime - dataArray[i].created_time)
         if (dataArray[i].created_time < endTime) {
           if (dataArray[i].created_time > startTime) {
-            console.log('internal trigger');
+            // console.log('internal trigger');
             imageArray.push(dataArray[i]);
           } else {
             endOfRequest = true;
@@ -51,7 +62,10 @@ var queryInstagram = function queryInstagram(body, cb) {
       if (!endOfRequest) {
         recursiveQuery(parsedBody.pagination.next_url)
       } else {
-        cb(imageArray);
+        cb({
+          data: imageArray,
+          message: 'All images found'
+        });
       }
     })
   };

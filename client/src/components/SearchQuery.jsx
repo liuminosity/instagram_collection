@@ -50,7 +50,8 @@ var SearchQuery = React.createClass({
           accessToken: this.props.token
         }),
         success: function(data) {
-          _this.props.updateImages(data)
+          console.log(data.message);
+          _this.props.updateImages(data.data)
         }
       })
 
