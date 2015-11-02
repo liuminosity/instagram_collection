@@ -46,7 +46,8 @@ var SearchQuery = React.createClass({
         data: JSON.stringify({
           startTime: unixStart,
           endTime: unixEnd,
-          tag: tagInput
+          tag: tagInput,
+          accessToken: this.props.token
         }),
         success: function(data) {
           _this.props.updateImages(data)
