@@ -30,12 +30,12 @@ var queryInstagram = function queryInstagram(body, cb) {
   
   //Variables to ensure user doesn't use too many requests for one search. Realistically, requestLimit would be higher (~100)
   var requestCounter = 0;
-  var requestLimit = 10;
+  var requestLimit = 5;
 
   var recursiveQuery = function recursiveQuery(queryString) {
     requestCounter++;
     console.log('this is requestCounter', requestCounter, 'with queryString', queryString);
-    if (requestCounter >= 3) {
+    if (requestCounter >= requestLimit) {
       var message = imageArray.length === 0 ? 'No results found within API call limit, please expand date range' : 
         'API call due to internal limit. Recommend re-rerunning your search with new end date of ' + moment.unix(imageArray[imageArray.length-1].created_time).format().slice(0,10);
       cb({
@@ -59,7 +59,7 @@ var queryInstagram = function queryInstagram(body, cb) {
           }
         }
       }
-      if (!endOfRequest) {
+      if (!endOfRequest && parsedBody.pagination.next_url) {
         recursiveQuery(parsedBody.pagination.next_url)
       } else {
         cb({
