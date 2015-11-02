@@ -9,6 +9,7 @@ var App = React.createClass({
   getInitialState: function getInitialState() {
     return {
       userIsAuthenticated: false,
+      currentPage: 'home',
     }
   },
 
@@ -21,7 +22,6 @@ var App = React.createClass({
         token: token,
         searchData: [],
         paginationURL: '',
-        currentPage: 'home'
       })
     }
 
@@ -54,6 +54,27 @@ var App = React.createClass({
     })
   },
 
+  changeTabToHome: function changeTabToHome() {
+    if (this.state.currentPage !== 'home') {
+      this.setState({currentPage: 'home'});
+    }
+  },
+
+  changeTabToCollections: function changeTabToCollections() {
+    if (this.state.currentPage !== 'collections') {
+      this.setState({currentPage: 'collections'});
+    }
+  },
+
+  TabsBlock: function TabsBlock() {
+    return this.state.userIsAuthenticated ? 
+      <div style={{'width':'40%', 'marginLeft':'20%', 'marginBottom':'5%'}}>
+        <span onClick={this.changeTabToHome} style={{cursor:'pointer', 'float':'left'}}>Home</span>
+        <span onClick={this.changeTabToCollections} style={{cursor:'pointer', 'float':'right'}}>Collections</span>
+      </div> :
+      <div/>;
+  },  
+
   //Block that displays the Login Button component if the user is not logged in, else displays nothing
   LoginButtonBlock: function LoginButtonBlock() {
     return this.state.userIsAuthenticated ? <SearchQuery token={this.state.token} updateImages={this.updateImages} cachePagination={this.cachePagination}/>: <LoginButton />;
@@ -73,6 +94,7 @@ var App = React.createClass({
     return (
       <div>
         <h1>Instagram Collector </h1>
+        { this.TabsBlock() }
         { this.LoginButtonBlock() }
         { this.ImagesBlock() }
         { this.CollectionsViewBlock() }
