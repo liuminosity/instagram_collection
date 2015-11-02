@@ -1,6 +1,6 @@
 var React = require('react');
 
-var addCollectionUrl = 'http://127.0.0.1:3000/addCollection';
+var addCollectionUrl = 'https://boiling-headland-4189.herokuapp.com/addCollection';
 
 var AddCollection = React.createClass({
 
