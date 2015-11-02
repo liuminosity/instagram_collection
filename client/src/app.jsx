@@ -22,6 +22,7 @@ var App = React.createClass({
         token: token,
         searchData: [],
         paginationURL: '',
+        collectionCache: []
       })
     }
 
@@ -43,8 +44,17 @@ var App = React.createClass({
 
   updateImages: function updateImages(data) {
     this.setState({
-      searchData: data,
-    });
+      searchData: data
+    })
+  },
+
+  cacheToCollection: function cacheToCollection(imageData) {
+    var collection = this.state.collectionCache;
+    collection.push(imageData);
+    console.log('this is collection:', collection)
+    this.setState({
+      collectionCache: collection
+    })
   },
 
   cachePagination: function cachePagination(data, paginationURL) {
@@ -84,13 +94,30 @@ var App = React.createClass({
   ImagesBlock: function ImagesBlock() {
     return this.state.userIsAuthenticated && this.state.currentPage === 'home' ? 
     <div>
-      <SearchQuery token={this.state.token} updateImages={this.updateImages} cachePagination={this.cachePagination}/>
-      <ImageList imageData={this.state.searchData} nextPageData={this.state.nextPageData} paginationURL={this.state.paginationURL} updateImages={this.updateImages} cachePagination={this.cachePagination}/>
+      <SearchQuery 
+        token={this.state.token} 
+        updateImages={this.updateImages} 
+        cachePagination={this.cachePagination}/>
+      <ImageList 
+        imageData={this.state.searchData} 
+        nextPageData={this.state.nextPageData} 
+        paginationURL={this.state.paginationURL} 
+        updateImages={this.updateImages} 
+        cacheToCollection={this.cacheToCollection}
+        cachePagination={this.cachePagination}/>
     </div> : <div/>;
   },
 
   CollectionsViewBlock: function CollectionsViewBlock() {
-    return this.state.currentPage === 'collections' ? <div> collections here </div> : <div/>;
+    return this.state.currentPage === 'collections' ? 
+      <div> <ImageList 
+        imageData={this.state.collectionCache} 
+        nextPageData={this.state.nextPageData} 
+        paginationURL={this.state.paginationURL} 
+        updateImages={this.updateImages} 
+        cacheToCollection={null}
+        cachePagination={null}/>
+      </div> : <div/>;
   },
 
   render: function render() {

@@ -21,6 +21,12 @@ var ImageList = React.createClass({
     this.props.updateImages(this.props.imageData);
   },
 
+  cacheToCollection: function cacheToCollection(index) {
+    this.props.imageData[index].saved = true;
+    this.props.cacheToCollection(this.props.imageData[index]);
+    this.props.updateImages(this.props.imageData);
+  },
+
   MoreImagesBlock: function MoreImagesBlock() {
     return this.props.paginationURL === '' || this.props.paginationURL === undefined ? <div/> : <span onClick={this.handlePagination} style={{'position': 'absolute', 'bottom': '0', 'cursor':'pointer'}}> More images... </span>; 
 
@@ -31,8 +37,18 @@ var ImageList = React.createClass({
     for (var i = 0; i < this.props.imageData.length; i++) {
       var imageURL = this.props.imageData[i].images.low_resolution.url;
       var sourceURL = this.props.imageData[i].link;
-      var caption = this.props.imageData[i].caption.text
-      imageArray.push(<ImageBox imageURL={imageURL} sourceURL={sourceURL} caption={caption} callback={this.removeImage} key={i} index={i}/>)
+      var caption = this.props.imageData[i].caption.text;
+      var saved = !!this.props.imageData[i].saved;
+      imageArray.push(
+        <ImageBox 
+          imageURL={imageURL} 
+          sourceURL={sourceURL} 
+          caption={caption} 
+          removeImage={this.removeImage} 
+          cacheToCollection={this.cacheToCollection}
+          saved={saved}
+          key={i} 
+          index={i}/>)
     };
     return (
       <div style={{'width':'95%', 'marginLeft':'2.5%'}}>
