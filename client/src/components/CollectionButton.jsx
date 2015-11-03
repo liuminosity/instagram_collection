@@ -8,7 +8,7 @@ var CollectionButton = React.createClass({
 
   render: function render() {
     return (
-      <span onClick={this.handleClick} style={{'cursor':'pointer'}}>{this.props.collectionName}<br/></span>
+      <li className = 'list-group-item' onClick={this.handleClick} style={{'cursor':'pointer', 'marginRight':'.5%'}}>{this.props.collectionName}</li>
       );
   },
 })

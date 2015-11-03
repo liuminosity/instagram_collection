@@ -23,9 +23,8 @@ var CollectionImageBox = React.createClass({
               { this.CaptionBlock() }
             </h2>
             <div style={{'float': 'right', 'marginRight':'3%'}}>
-              Username: <br/>
-              { this.props.username } <br/><br/>
-              <a href={this.props.sourceUrl} target="_newtab">View on Instagram</a> <br/>
+              <i className="fa fa-user"> </i>{ this.props.username } <br/><br/>
+              <i className="fa fa-instagram"></i>  <a href={this.props.sourceUrl} target="_newtab">View on Instagram</a>
             </div>
           </div>
           

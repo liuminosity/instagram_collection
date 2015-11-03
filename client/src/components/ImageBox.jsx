@@ -18,7 +18,7 @@ var ImageBox = React.createClass({
 
   SaveButtonBlock: function SaveButtonBlock() {
     return this.props.saved ? <div><span style={{'color':'green'}}> Imaged saved! </span><br/></div> : 
-      <div><span onClick={this.handleSave} style={{cursor:'pointer'}}> Save this image </span> <br/></div>;
+      <div><i className='fa fa-floppy-o'></i><span onClick={this.handleSave} style={{cursor:'pointer'}}> Save this image </span> <br/></div>;
   },
 
   ImageVideoBlock: function ImageVideoBlock() {
@@ -35,10 +35,10 @@ var ImageBox = React.createClass({
               { this.CaptionBlock() }
             </h2>
             <div style={{'float': 'right', 'marginRight':'3%'}}>
-              Username: <br/>
-              { this.props.username } <br/><br/>
+          
+              <i className="fa fa-user"></i>  { this.props.username } <br/><br/>
               { this.SaveButtonBlock() }
-              <a href={this.props.sourceUrl} target="_newtab">View on Instagram</a> <br/>
+               <a href={this.props.sourceUrl} target="_newtab"><i className="fa fa-instagram"></i>  View on Instagram</a> <br/>
               <span onClick={this.handleRemove} style={{cursor:'pointer'}}> Remove this image </span> <br/>
             </div>
           </div>

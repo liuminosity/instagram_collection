@@ -67,7 +67,7 @@ var SearchQuery = React.createClass({
     return (
       <div>
         <form onSubmit={this.handleFormSubmit}>
-          <input style={{'width': '40%'}} type="text" placeholder="What tag do you want to search?" ref="tags" /><br/>
+          <input className='.input-lg' style={{'width': '40%'}} type="text" placeholder="What tag do you want to search?" ref="tags" /><br/>
           <div style={{'marginTop': '1%'}}>
             Timeframe: (optional--leave blank for all recent media): <br/>
             Start date:

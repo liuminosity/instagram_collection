@@ -9,9 +9,9 @@ var CollectionsList = require('./components/CollectionsList');
 var CollectionImageList = require('./components/CollectionImageList');
 
 
-// var serverUrl = 'http://127.0.0.1:3000';
+var serverUrl = 'http://127.0.0.1:3000';
 //Uncomment line above and comment out line below to run locally
-var serverUrl = 'https://boiling-headland-4189.herokuapp.com';
+// var serverUrl = 'https://boiling-headland-4189.herokuapp.com';
 
 var App = React.createClass({
 
@@ -111,10 +111,12 @@ var App = React.createClass({
 
   TabsBlock: function TabsBlock() {
     return this.state.userIsAuthenticated ? 
-      <div style={{'width':'95%', 'marginBottom':'15px'}}>
-        <span onClick={this.changeTabToHome} style={{cursor:'pointer', 'marginRight':'1%','padding':'5px','paddingLeft':'20px','paddingRight':'20px','borderStyle': 'inset'}}>Home</span>
-        <span onClick={this.changeTabToAddCollection} style={{cursor:'pointer', 'marginLeft':'1%', 'marginRight':'1%', 'padding':'5px','paddingLeft':'20px','paddingRight':'20px', 'borderStyle': 'inset'}}>Images to be saved</span>
-        <span onClick={this.changeTabToCollections} style={{cursor:'pointer', 'marginLeft':'1%', 'marginRight':'1%', 'padding':'5px','paddingLeft':'20px','paddingRight':'20px', 'borderStyle': 'inset'}}>Collections</span>
+      <div style={{'marginBottom':'15px'}}>
+        <div style={{'margin': '0 auto', 'width': '318px', 'height':'30px'}}>
+          <button className='btn btn-primary' style={{'marginLeft':'0%'}} onClick={this.changeTabToHome}>Home</button>
+          <button className='btn btn-primary' style={{'marginLeft':'3px'}} onClick={this.changeTabToAddCollection}>Images to be Saved</button>
+          <button className='btn btn-primary' style={{'marginLeft':'3px'}} onClick={this.changeTabToCollections}>Collections</button>
+        </div>
       </div> :
       <div/>;
   },  
@@ -179,8 +181,8 @@ var App = React.createClass({
 
   render: function render() {
     return (
-      <div style={{'marginLeft':'2.5%', 'width':'95%'}}>
-        <h1>Instagram Collector </h1>
+      <div>
+        <h1 className='header'>Instagram Collector </h1>
         
         { this.TabsBlock() }
         <hr style={{'marginBottom':'20px', 'width':'100%'}}/>

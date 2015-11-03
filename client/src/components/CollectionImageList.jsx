@@ -23,7 +23,7 @@ var CollectionImageList = React.createClass({
           index={i}/>)
     };
     return (
-      <div style={{'width':'95%', 'marginLeft':'2.5%'}}>
+      <div style={{}}>
         {imageArray}
       </div>
       );
