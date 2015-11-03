@@ -106,7 +106,7 @@ var App = React.createClass({
   },
 
   LoadingBlock: function LoadingBlock() {
-    return this.state.isLoading ? <img src="http://www.arabianbusiness.com/skins/ab.main/gfx/loading_spinner.gif" style={{'width':'5%', 'marginLeft':'47.5%', 'marginTop': '5%'}}/> : <div/>;
+    return this.state.isLoading ? <img src="https://web.sure.com/themes/default/images/loading.gif" style={{'width':'5%', 'marginLeft':'47.5%', 'marginTop': '5%'}}/> : <div/>;
   },
 
   TabsBlock: function TabsBlock() {
