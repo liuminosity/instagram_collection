@@ -1,6 +1,7 @@
 var React = require('react');
 var moment = require('moment');
 
+// var timeSearchUrl = 'http://127.0.0.1:3000/timeSearch'
 var timeSearchUrl = 'https://boiling-headland-4189.herokuapp.com/timeSearch';
 
 var SearchQuery = React.createClass({
@@ -18,7 +19,7 @@ var SearchQuery = React.createClass({
       console.log('please input a tag'); 
     } else if (startInput === '' || endInput === '') {
       var apiQuery = 'https://api.instagram.com/v1/tags/' + tagInput + '/media/recent?access_token=' + this.props.token;
-      // console.log(apiQuery);
+      _this.props.triggerLoading();
 
       $.ajax({
         url: apiQuery,
@@ -38,7 +39,7 @@ var SearchQuery = React.createClass({
     } else {
       var unixStart = new Date(startInput).getTime()/1000;
       var unixEnd = new Date(endInput).getTime()/1000;
-      console.log(unixStart, unixEnd);
+      _this.props.triggerLoading();
       $.ajax({
         type: 'POST',
         url: timeSearchUrl,

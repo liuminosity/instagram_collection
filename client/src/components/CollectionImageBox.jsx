@@ -14,7 +14,7 @@ var CollectionImageBox = React.createClass({
   },
 
   render: function render() {
-    console.log(this.props.mediaUrl, this.props.type);
+    // console.log(this.props.mediaUrl, this.props.type);
     return (
         <div style={{'float': 'left', 'marginTop': '1%', 'marginLeft': '1%', 'borderStyle': 'outset', 'width':'500px', 'height':'340px'}}> 
           <div style={{'position': 'relative', 'width': '100%', 'marginTop': '1%', 'marginLeft': '1%'}}>

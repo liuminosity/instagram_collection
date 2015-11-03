@@ -2,12 +2,14 @@ var React = require('react');
 
 var CollectionButton = require('./CollectionButton');
 
+// var getCollectionsUrl = 'http://127.0.0.1:3000/getCollections';
 var getCollectionsUrl = 'https://boiling-headland-4189.herokuapp.com/getCollections';
 
 var CollectionsList = React.createClass({
 
   componentWillMount: function componentWillMount() {
     var _this = this;
+    this.props.triggerLoading();
     $.ajax({
       type: 'POST',
       url: getCollectionsUrl,

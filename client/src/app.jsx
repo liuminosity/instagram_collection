@@ -14,6 +14,7 @@ var App = React.createClass({
     return {
       userIsAuthenticated: false,
       currentPage: 'home',
+      isLoading: true,
     }
   },
 
@@ -29,6 +30,7 @@ var App = React.createClass({
         collectionCache: [],
         collections: [],
         selectedCollectionIndex: 0,
+        isLoading: false
       })
     }
 
@@ -48,7 +50,14 @@ var App = React.createClass({
 
   updateImages: function updateImages(data) {
     this.setState({
-      searchData: data
+      searchData: data,
+      isLoading: false
+    })
+  },
+
+  triggerLoading: function triggerLoading() {
+    this.setState({
+      isLoading: true
     })
   },
 
@@ -80,9 +89,9 @@ var App = React.createClass({
   },
 
   storeCollections: function storeCollections(data) {
-    console.log(data);
     this.setState({
-      collections: data
+      collections: data,
+      isLoading: false
     })
   },
 
@@ -102,6 +111,10 @@ var App = React.createClass({
     if (this.state.currentPage !== 'collections') {
       this.setState({currentPage: 'collections'});
     }
+  },
+
+  LoadingBlock: function LoadingBlock() {
+    return this.state.isLoading ? <img src="http://www.arabianbusiness.com/skins/ab.main/gfx/loading_spinner.gif" style={{'width':'5%', 'marginLeft':'47.5%', 'marginTop': '5%'}}/> : <div/>;
   },
 
   TabsBlock: function TabsBlock() {
@@ -126,6 +139,7 @@ var App = React.createClass({
         <SearchQuery 
           token={this.state.token} 
           updateImages={this.updateImages} 
+          triggerLoading={this.triggerLoading}
           cachePagination={this.cachePagination}/>
         <ImageList 
           imageData={this.state.searchData} 
@@ -150,7 +164,7 @@ var App = React.createClass({
   },
 
   CollectionsImageBlock: function CollectionsImageBlock() {
-    return this.state.collections.length === 0 ? <div/> :
+    return this.state.collections.length === 0 ? <div>You have no collections! Start adding one today</div> :
       <CollectionImageList 
           imageData={this.state.collections[this.state.selectedCollectionIndex].data}/>;
   },
@@ -160,6 +174,7 @@ var App = React.createClass({
       <div> 
         <CollectionsList
           storeCollections={this.storeCollections}
+          triggerLoading={this.triggerLoading}
           updateSelectedCollectionIndex={this.updateSelectedCollectionIndex}
           collections={this.state.collections}
           token={this.state.token}/>
@@ -171,12 +186,14 @@ var App = React.createClass({
     return (
       <div style={{'marginLeft':'2.5%', 'width':'95%'}}>
         <h1>Instagram Collector </h1>
+        
         { this.TabsBlock() }
         <hr style={{'marginBottom':'20px', 'width':'100%'}}/>
         { this.LoginButtonBlock() }
         { this.ImagesBlock() }
         { this.AddCollectionsViewBlock() }
         { this.CollectionsViewBlock() }
+        { this.LoadingBlock() }
       </div>
       )
   },
