@@ -20,7 +20,7 @@ var App = React.createClass({
   componentWillMount: function componentWillMount() {
     var _this = this;
     var token = window.location.hash.slice(14);
-    if (token.length === 51) {
+    if (token.length > 30) {
       _this.setState({
         userIsAuthenticated: true,
         token: token,

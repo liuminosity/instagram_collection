@@ -37,6 +37,7 @@ var ImageList = React.createClass({
     for (var i = 0; i < this.props.imageData.length; i++) {
       var mediaUrl = this.props.imageData[i].videos ? this.props.imageData[i].videos.low_bandwidth.url : this.props.imageData[i].images.low_resolution.url;
       var type = this.props.imageData[i].type;
+      var username = this.props.imageData[i].user.username;
       var sourceUrl = this.props.imageData[i].link;
       var caption = this.props.imageData[i].caption.text;
       var saved = !!this.props.imageData[i].saved;
@@ -44,6 +45,7 @@ var ImageList = React.createClass({
         <ImageBox 
           mediaUrl={mediaUrl} 
           type={type}
+          username={username}
           sourceUrl={sourceUrl} 
           caption={caption} 
           removeImage={this.removeImage} 
