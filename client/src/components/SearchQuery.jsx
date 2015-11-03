@@ -1,15 +1,13 @@
 var React = require('react');
 var moment = require('moment');
 
-// var timeSearchUrl = 'http://127.0.0.1:3000/timeSearch'
-var timeSearchUrl = 'https://boiling-headland-4189.herokuapp.com/timeSearch';
-
 var SearchQuery = React.createClass({
 
   //Action that is triggered once user hits login. 
   handleFormSubmit: function handleFormSubmit(event) {
     var _this = this;
     event.preventDefault();
+    var timeSearchUrl = this.props.serverUrl + '/timeSearch'
 
     var tagInput = React.findDOMNode(this.refs.tags).value;
     var startInput = React.findDOMNode(this.refs.start).value;

@@ -57,21 +57,15 @@ var ImageList = React.createClass({
     return (
       <div style={{'width':'100%'}}>
         <table>
-          <tfoot>
-            <tr>
-            <td style={{'position': 'relative', 'marginTop':'4%', 'marginBottom':'5%', 'marginLeft':'auto', 'marginRight':'auto'}}>
-              { this.MoreImagesBlock() }
-            </td>
-            </tr>
-          </tfoot>
           <tbody>
             <tr style={{'width':'100%'}}>
-              {imageArray}
-              
+              {imageArray}  
             </tr>
           </tbody>
-
         </table>
+        <div style={{'position': 'relative', 'marginTop':'4%', 'marginBottom':'5%', 'marginLeft':'auto', 'marginRight':'auto'}}>
+          { this.MoreImagesBlock() }
+        </div>
        
       </div>
       );

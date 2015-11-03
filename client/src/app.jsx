@@ -8,6 +8,11 @@ var AddCollection = require('./components/AddCollection');
 var CollectionsList = require('./components/CollectionsList');
 var CollectionImageList = require('./components/CollectionImageList');
 
+
+// var serverUrl = 'http://127.0.0.1:3000';
+//Uncomment line above and comment out line below to run locally
+var serverUrl = 'https://boiling-headland-4189.herokuapp.com';
+
 var App = React.createClass({
 
   getInitialState: function getInitialState() {
@@ -33,19 +38,6 @@ var App = React.createClass({
         isLoading: false
       })
     }
-
-    // if (this.props.params.token) {
-    //   var params = _this.props.params.token.split('&')
-    //   console.log(params);
-    //   var access_token = params[0].slice(13);
-    //   console.log('this is access token',access_token)
-    //   this.setState({
-    //     userIsAuthenticated: true,
-    //     access_token: access_token
-    //   })
-    // } else {
-    //   console.log('log in');
-    // }
   },
 
   updateImages: function updateImages(data) {
@@ -138,6 +130,7 @@ var App = React.createClass({
       <div>
         <SearchQuery 
           token={this.state.token} 
+          serverUrl={serverUrl}
           updateImages={this.updateImages} 
           triggerLoading={this.triggerLoading}
           cachePagination={this.cachePagination}/>
@@ -156,6 +149,7 @@ var App = React.createClass({
       <div> 
         <AddCollection 
           token={this.state.token} 
+          serverUrl={serverUrl}
           collectionCache={this.state.collectionCache}
           clearCollectionCache={this.clearCollectionCache}/>
         <CollectionCacheList 
@@ -173,6 +167,7 @@ var App = React.createClass({
     return this.state.currentPage === 'collections' ?
       <div> 
         <CollectionsList
+          serverUrl={serverUrl}
           storeCollections={this.storeCollections}
           triggerLoading={this.triggerLoading}
           updateSelectedCollectionIndex={this.updateSelectedCollectionIndex}
