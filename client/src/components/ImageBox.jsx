@@ -28,7 +28,7 @@ var ImageBox = React.createClass({
 
   render: function render() {
     return (
-        <div style={{'float': 'left', 'marginTop': '1%', 'marginLeft': '1%', 'borderStyle': 'outset', 'width':'500px', 'height':'340px'}}> 
+        <div style={{'float': 'left', 'marginTop': '1%', 'marginRight': '1%', 'borderStyle': 'outset', 'width':'500px', 'height':'340px'}}> 
           <div style={{'position': 'relative', 'width': '100%', 'marginTop': '1%', 'marginLeft': '1%'}}>
             { this.ImageVideoBlock() }
             <h2 style={{'position': 'absolute', 'top': '250px', 'left': '0', 'width': '100%'}}> 

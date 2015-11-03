@@ -28,7 +28,7 @@ var ImageList = React.createClass({
   },
 
   MoreImagesBlock: function MoreImagesBlock() {
-    return this.props.paginationURL === '' || this.props.paginationURL === undefined ? <div/> : <span onClick={this.handlePagination} style={{'position': 'absolute', 'bottom': '0', 'cursor':'pointer'}}> More images... </span>; 
+    return this.props.paginationURL === '' || this.props.paginationURL === undefined ? <div/> : <span onClick={this.handlePagination} style={{'position': 'absolute', 'bottom': '0', 'cursor':'pointer','padding':'5px','paddingLeft':'20px','paddingRight':'20px','borderStyle': 'inset'}}> Load more images... </span>; 
 
   },
 
@@ -55,10 +55,15 @@ var ImageList = React.createClass({
           index={i}/>)
     };
     return (
-      <div style={{'width':'95%', 'marginLeft':'2.5%'}}>
-        {imageArray}
-        <div style={{'position': 'relative', 'marginTop':'2%'}}>
-          { this.MoreImagesBlock() }
+      <div style={{'width':'100%'}}>
+        <table>
+          <tr style={{'width':'100%'}}>
+            {imageArray}
+            
+          </tr>
+        </table>
+        <div style={{'position': 'relative', 'marginTop':'4%', 'marginBottom':'5%', 'marginLeft':'auto', 'marginRight':'auto'}}>
+            { this.MoreImagesBlock() }
         </div>
       </div>
       );

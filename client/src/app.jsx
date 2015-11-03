@@ -106,10 +106,10 @@ var App = React.createClass({
 
   TabsBlock: function TabsBlock() {
     return this.state.userIsAuthenticated ? 
-      <div style={{'width':'60%', 'marginLeft':'20%', 'marginBottom':'5%'}}>
-        <span onClick={this.changeTabToHome} style={{cursor:'pointer', 'marginLeft':'14%', 'marginRight':'14%'}}>Home</span>
-        <span onClick={this.changeTabToAddCollection} style={{cursor:'pointer', 'marginLeft':'14%', 'marginRight':'14%'}}>Images to be saved</span>
-        <span onClick={this.changeTabToCollections} style={{cursor:'pointer', 'marginLeft':'14%', 'marginRight':'14%'}}>Collections</span>
+      <div style={{'width':'95%', 'marginBottom':'15px'}}>
+        <span onClick={this.changeTabToHome} style={{cursor:'pointer', 'marginRight':'1%','padding':'5px','paddingLeft':'20px','paddingRight':'20px','borderStyle': 'inset'}}>Home</span>
+        <span onClick={this.changeTabToAddCollection} style={{cursor:'pointer', 'marginLeft':'1%', 'marginRight':'1%', 'padding':'5px','paddingLeft':'20px','paddingRight':'20px', 'borderStyle': 'inset'}}>Images to be saved</span>
+        <span onClick={this.changeTabToCollections} style={{cursor:'pointer', 'marginLeft':'1%', 'marginRight':'1%', 'padding':'5px','paddingLeft':'20px','paddingRight':'20px', 'borderStyle': 'inset'}}>Collections</span>
       </div> :
       <div/>;
   },  
@@ -169,9 +169,10 @@ var App = React.createClass({
 
   render: function render() {
     return (
-      <div>
+      <div style={{'marginLeft':'2.5%', 'width':'95%'}}>
         <h1>Instagram Collector </h1>
         { this.TabsBlock() }
+        <hr style={{'marginBottom':'20px', 'width':'100%'}}/>
         { this.LoginButtonBlock() }
         { this.ImagesBlock() }
         { this.AddCollectionsViewBlock() }

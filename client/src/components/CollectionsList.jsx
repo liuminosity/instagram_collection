@@ -34,7 +34,7 @@ var CollectionsList = React.createClass({
           index={i}/>)
     }
     return (
-      <div style={{'width':'95%', 'marginLeft':'2.5%'}}>
+      <div style={{'width':'95%'}}>
         <b>Your current collections: </b><br/>
         {collectionNamesArray}
       </div>
