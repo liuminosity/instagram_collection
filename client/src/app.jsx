@@ -161,8 +161,12 @@ var App = React.createClass({
 
   CollectionsImageBlock: function CollectionsImageBlock() {
     return this.state.collections.length === 0 ? <div>You have no collections! Start adding one today</div> :
-      <CollectionImageList 
-          imageData={this.state.collections[this.state.selectedCollectionIndex].data}/>;
+      <div> 
+        <hr style={{'marginBottom':'20px','width':'100%'}}/>
+        Currently viewing collection: {this.state.collections[this.state.selectedCollectionIndex].collectionName}
+        <CollectionImageList 
+          imageData={this.state.collections[this.state.selectedCollectionIndex].data}/>
+      </div>;
   },
 
   CollectionsViewBlock: function CollectionsViewBlock() {
