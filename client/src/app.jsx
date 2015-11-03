@@ -6,6 +6,7 @@ var ImageList = require('./components/ImageList');
 var CollectionCacheList = require('./components/CollectionCacheList');
 var AddCollection = require('./components/AddCollection');
 var CollectionsList = require('./components/CollectionsList');
+var CollectionImageList = require('./components/CollectionImageList');
 
 var App = React.createClass({
 
@@ -25,7 +26,9 @@ var App = React.createClass({
         token: token,
         searchData: [],
         paginationURL: '',
-        collectionCache: []
+        collectionCache: [],
+        collections: [],
+        selectedCollectionIndex: 0,
       })
     }
 
@@ -67,6 +70,12 @@ var App = React.createClass({
     this.setState({
       nextPageData: data,
       paginationURL: paginationURL
+    })
+  },
+
+  updateSelectedCollectionIndex: function updateSelectedCollectionIndex(index) {
+    this.setState({
+      selectedCollectionIndex: index
     })
   },
 
@@ -140,12 +149,21 @@ var App = React.createClass({
       </div> : <div/>;
   },
 
+  CollectionsImageBlock: function CollectionsImageBlock() {
+    return this.state.collections.length === 0 ? <div/> :
+      <CollectionImageList 
+          imageData={this.state.collections[this.state.selectedCollectionIndex].data}/>;
+  },
+
   CollectionsViewBlock: function CollectionsViewBlock() {
     return this.state.currentPage === 'collections' ?
       <div> 
         <CollectionsList
           storeCollections={this.storeCollections}
+          updateSelectedCollectionIndex={this.updateSelectedCollectionIndex}
+          collections={this.state.collections}
           token={this.state.token}/>
+        { this.CollectionsImageBlock() }
       </div> : <div/>;
   },
 

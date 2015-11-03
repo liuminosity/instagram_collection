@@ -1,7 +1,8 @@
 var React = require('react');
 
-var getCollectionsUrl = 'http://127.0.0.1:3000/getCollections';
+var CollectionButton = require('./CollectionButton');
 
+var getCollectionsUrl = 'https://boiling-headland-4189.herokuapp.com/getCollections';
 
 var CollectionsList = React.createClass({
 
@@ -16,16 +17,26 @@ var CollectionsList = React.createClass({
       }),
       success: function(data) {
         console.log('hi', data);
-        // console.log('this', _this);
         _this.props.storeCollections(data.collections);
+
       }
     })
   },
 
   render: function render() {
-    var collectionArray = [];
+    var collectionNamesArray = [];
+    for (var i = 0; i < this.props.collections.length; i++) {
+      collectionNamesArray.push(
+        <CollectionButton 
+          updateSelectedCollectionIndex={this.props.updateSelectedCollectionIndex}
+          collectionName={this.props.collections[i].collectionName}
+          key={i}
+          index={i}/>)
+    }
     return (
       <div style={{'width':'95%', 'marginLeft':'2.5%'}}>
+        <b>Your current collections: </b><br/>
+        {collectionNamesArray}
       </div>
       );
   },
