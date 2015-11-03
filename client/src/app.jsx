@@ -19,7 +19,7 @@ var App = React.createClass({
     return {
       userIsAuthenticated: false,
       currentPage: 'home',
-      isLoading: true,
+      isLoading: false,
     }
   },
 
