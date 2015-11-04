@@ -9,9 +9,9 @@ var CollectionsList = require('./components/CollectionsList');
 var CollectionImageList = require('./components/CollectionImageList');
 
 
-// var serverUrl = 'http://127.0.0.1:3000';
+var serverUrl = 'http://127.0.0.1:3000';
 //Uncomment line above and comment out line below to run locally
-var serverUrl = 'https://boiling-headland-4189.herokuapp.com';
+// var serverUrl = 'https://boiling-headland-4189.herokuapp.com';
 
 var App = React.createClass({
 

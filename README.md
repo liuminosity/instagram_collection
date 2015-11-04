@@ -3,7 +3,7 @@ Currently deployed on [heroku!](https://boiling-headland-4189.herokuapp.com)
 
 ##Running this locally:
 - Clone this repo
-- From the root folder, run ```gulp``` and in a separate tab, run ```node server/server.js``` in your console
+- From the root folder, run ```npm install```, ```gulp```, and in a separate tab, ```node server/server.js``` in your console
 - That's it! The database is already linked up to one hosted on heroku
 
 ##Features:
@@ -17,12 +17,11 @@ Currently deployed on [heroku!](https://boiling-headland-4189.herokuapp.com)
 - Front-end built with React.js for fast rendering/re-rendering of the webapp and for enforcing clean, modular code
 - Single source of truth/single state for clarity, with data and callbacks passed down via props
 - User-login data never sent to nor stored on server, only bare minimum stored on server for the purpose of saving the user's collections
-- Data is stored in MongoDB
-- 
+- Back-end built with Node/Express, with data stored in MongoDB
+- To prevent overly expensive API calls for searches within a date range, API calls are limited to a set number, currently set to a lower number just to not waste API calls. When that limit is hit, server suggests a new date range for the query
 
 ##Component structure:
-```
-- App (app.jsx)
+```- App (app.jsx)
   - 'home' view
     - LoginButton (/components/LoginButton)
     - SearchQuery (/components/SearchQuery)
@@ -36,5 +35,4 @@ Currently deployed on [heroku!](https://boiling-headland-4189.herokuapp.com)
     - CollectionsList (/components/CollectionsList)
     - CollectionsImageList (/components/CollectionsImageList)
       - CollectionImageBox (/components/CollectionImageBox)
-
 ```
