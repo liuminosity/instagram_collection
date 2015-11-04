@@ -6,7 +6,9 @@ var CollectionsList = React.createClass({
 
   componentWillMount: function componentWillMount() {
     var _this = this;
-    this.props.triggerLoading();
+    if (this.props.collections.length === 0) {
+      this.props.triggerLoading();
+    }
     var getCollectionsUrl = this.props.serverUrl + '/getCollections'
     $.ajax({
       type: 'POST',
@@ -16,8 +18,10 @@ var CollectionsList = React.createClass({
         accessToken: this.props.token
       }),
       success: function(data) {
+        if (data === '') {
+          data = {collections: []};
+        } 
         _this.props.storeCollections(data.collections);
-
       }
     })
   },

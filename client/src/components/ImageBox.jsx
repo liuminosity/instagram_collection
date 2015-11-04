@@ -39,7 +39,7 @@ var ImageBox = React.createClass({
               <i className="fa fa-user"></i>  { this.props.username } <br/><br/>
               { this.SaveButtonBlock() }
                <a href={this.props.sourceUrl} target="_newtab"><i className="fa fa-instagram"></i>  View on Instagram</a> <br/>
-              <span onClick={this.handleRemove} style={{cursor:'pointer'}}> Remove this image </span> <br/>
+              <span onClick={this.handleRemove} style={{cursor:'pointer', 'color':'red'}}> <i className="fa fa-ban"></i> Remove this image </span> <br/>
             </div>
           </div>
           
