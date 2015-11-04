@@ -2,6 +2,7 @@ var React = require('react');
 
 var CollectionButton = React.createClass({
 
+  //When user selects a collection, saves that selection into state (as an index)
   handleClick: function handleClick() {
     this.props.updateSelectedCollectionIndex(this.props.index);
   },

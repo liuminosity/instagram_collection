@@ -9,16 +9,20 @@ var SearchQuery = React.createClass({
     event.preventDefault();
     var timeSearchUrl = this.props.serverUrl + '/timeSearch'
 
-    var tagInput = React.findDOMNode(this.refs.tags).value;
-    var startInput = React.findDOMNode(this.refs.start).value;
-    var endInput = React.findDOMNode(this.refs.end).value;
+    //Gets input values from the user/DOM
+    var tagInput = React.findDOMNode(this.refs.tags).value.trim();
+    var startInput = React.findDOMNode(this.refs.start).value.trim();
+    var endInput = React.findDOMNode(this.refs.end).value.trim();
 
     if (tagInput === '') {
+      //TODO: make a better UX for empty string
+      //TODO: handle spacebars
       console.log('please input a tag'); 
+
+    //If either the start or end inputs are empty, assume search only for recent tags
     } else if (startInput === '' || endInput === '') {
       var apiQuery = 'https://api.instagram.com/v1/tags/' + tagInput + '/media/recent?access_token=' + this.props.token;
       _this.props.triggerLoading();
-
       $.ajax({
         url: apiQuery,
         dataType: "jsonp",
@@ -34,7 +38,10 @@ var SearchQuery = React.createClass({
           })
         }
       })
+
+    //Else take the time range and send the request to the server, which will handle the rest of the request
     } else {
+      //Changes time into unix
       var unixStart = new Date(startInput).getTime()/1000;
       var unixEnd = new Date(endInput).getTime()/1000;
       _this.props.triggerLoading();
@@ -49,16 +56,12 @@ var SearchQuery = React.createClass({
           accessToken: this.props.token
         }),
         success: function(data) {
+          //TODO: display messages from server
           console.log(data.message);
           _this.props.updateImages(data.data)
         }
       })
-
     }
-
-    //https://api.instagram.com/v1/tags/{tag-name}/media/recent?access_token=ACCESS-TOKEN
-
-
   },
 
   render: function render() {

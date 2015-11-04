@@ -2,19 +2,19 @@ var React = require('react');
 
 var CollectionImageBox = React.createClass({
 
+  //Renders the caption block on top of images. If the caption is too long, returns a truncated version with "..."
   CaptionBlock: function CaptionBlock() {
-    // console.log(this.props.caption, this.props.caption.length);
     return this.props.caption.length < 44 ? <span style={{'color': 'white', 'font': '13px/24px Monaco, Sans-Serif', 'letterSpacing': '-1px', 'background': 'rgb(0, 0, 0)', 'background': 'rgba(0, 0, 0, 0.7)', 'padding': '10px'}}>{this.props.caption}</span> :
       <span style={{'color': 'white', 'font': '13px/24px Monaco, Sans-Serif', 'letterSpacing': '-1px', 'background': 'rgb(0, 0, 0)', 'background': 'rgba(0, 0, 0, 0.7)', 'padding': '10px'}}>{this.props.caption.slice(0,41)}...</span>;
   },
 
+  //Renders a video if the media is a video (with playback ability), else renders an image
   ImageVideoBlock: function ImageVideoBlock() {
     return this.props.type==='video' ? <video src={this.props.mediaUrl} height="320" width="320" style={{'border':'1px solid black'}} controls/> :
       <img src={this.props.mediaUrl} height="320" width="320" style={{'border':'1px solid black'}}/> ;
   },
 
   render: function render() {
-    // console.log(this.props.mediaUrl, this.props.type);
     return (
         <div style={{'float': 'left', 'marginTop': '1%', 'marginLeft': '1%', 'borderStyle': 'outset', 'width':'500px', 'height':'340px'}}> 
           <div style={{'position': 'relative', 'width': '100%', 'marginTop': '1%', 'marginLeft': '1%'}}>

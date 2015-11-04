@@ -4,6 +4,7 @@ var CollectionButton = require('./CollectionButton');
 
 var CollectionsList = React.createClass({
 
+  //Requests the server for the user's saved collections, and stores it to state
   componentWillMount: function componentWillMount() {
     var _this = this;
     if (this.props.collections.length === 0) {
@@ -18,6 +19,7 @@ var CollectionsList = React.createClass({
         accessToken: this.props.token
       }),
       success: function(data) {
+        //If the data==='' (aka user has no saved collections), set data to empty array
         if (data === '') {
           data = {collections: []};
         } 

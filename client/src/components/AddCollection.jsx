@@ -8,7 +8,6 @@ var AddCollection = React.createClass({
     var addCollectionUrl = this.props.serverUrl + '/addCollection';
     event.preventDefault();
     var collectionName = React.findDOMNode(this.refs.collectionName).value;
-    // console.log(collectionName);
 
     $.ajax({
       type: 'POST',
@@ -24,8 +23,6 @@ var AddCollection = React.createClass({
         console.log(data)
       }
     })
-
-
   },
 
   render: function render() {
