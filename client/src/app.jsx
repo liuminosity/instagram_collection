@@ -123,7 +123,7 @@ var App = React.createClass({
 
   //Block that displays the Login Button component if the user is not logged in, else displays nothing
   LoginButtonBlock: function LoginButtonBlock() {
-    return this.state.userIsAuthenticated ? <div/> : <LoginButton />;
+    return this.state.userIsAuthenticated ? <div/> : <LoginButton url={serverUrl}/>;
   },
 
   //Block that displays images if the user has requested something, else displays nothing

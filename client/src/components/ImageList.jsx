@@ -7,6 +7,7 @@ var ImageList = React.createClass({
   handlePagination: function handlePagination() {
     var _this = this;
     this.props.updateImages(this.props.nextPageData);
+    window.scrollTo(0,0);
     $.ajax({
       url: this.props.paginationURL,
       dataType: "jsonp",

@@ -7,7 +7,7 @@ var LoginButton = React.createClass({
   submitLogin: function submitLogin() {
     var instagramLoginUrl = 'https://api.instagram.com/oauth/authorize/?' + 
       'client_id=' + instagramAuth.clientID +
-      '&redirect_uri=' + instagramAuth.redirectURL +
+      '&redirect_uri=' + this.props.url +
       '&response_type=token';
     window.location.assign(instagramLoginUrl);
   },
