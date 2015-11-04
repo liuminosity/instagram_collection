@@ -1,24 +1,10 @@
-// var pg = require('pg');
 var request = require('request');
 var moment = require('moment');
 var auth = require('../instagramAuth.js');
 var User = require('./models/userModel');
 
-// var viewDatabase = function viewDatabase(cb) {
-//   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-//     client.query('SELECT * FROM test_table', function(err, result) {
-//       done();
-//       if (err) {
-//         console.log(err);
-//         cb('Error: ' + err);
-//       } else {
-//         console.log(result);
-//         cb(result);
-//       }
-//     })
-//   })
-// }
-
+//Adds a collection to a user's collections. If the user is not found, assumes that it is a new user and creates a new user
+//Either way, adds the user into the database. Used in /addCollection endpoint
 var addCollection = function addCollection(body, cb) {
   var accessToken = body.accessToken;
   var collectionData = body.collectionData;
@@ -68,6 +54,7 @@ var addCollection = function addCollection(body, cb) {
   })
 }
 
+//Gets all of the user's collections. Used in /getCollections endpoint
 var getCollections = function getCollections(body, cb) {
   var accessToken = body.accessToken;
   User.findOne({'accessToken':accessToken}, 'collections', function(err, collections) {
@@ -79,19 +66,19 @@ var getCollections = function getCollections(body, cb) {
   })
 }
 
+//Deletes a user, effectively deleting all of their collections. Not used
 var deleteCollections = function deleteCollections(body, cb) {
   var accessToken = body.accessToken;
   User.remove({'accessToken':accessToken}, function(err, result) {
     if (err) {
       console.log('error:', err)
     } else {
-      // console.log(collections)
       cb('deleted')
     }
   })
 }
 
-//temporarily not used
+//Add images to an existing collection. Not used
 var addToCollection = function addToCollection(body, cb) {
   var accessToken = body.accessToken;
   var collectionName = body.collectionName;
@@ -105,6 +92,7 @@ var addToCollection = function addToCollection(body, cb) {
   }})
 }
 
+//Queries Instagram, repeatedly sends requests to Instagram until either the artificial requestLimit is hit, or the date exceeds the date range
 var queryInstagram = function queryInstagram(body, cb) {
   var startTime = body.startTime;
   var endTime = body.endTime;
@@ -118,6 +106,7 @@ var queryInstagram = function queryInstagram(body, cb) {
   var requestCounter = 0;
   var requestLimit = 5;
 
+  //Recursive function that repeatedly paginates through Instagram queries until either the artificial requestLimit is hit, or the date exceeds the date range
   var recursiveQuery = function recursiveQuery(queryString) {
     requestCounter++;
     console.log('this is requestCounter', requestCounter, 'with queryString', queryString);
@@ -134,10 +123,8 @@ var queryInstagram = function queryInstagram(body, cb) {
       var parsedBody = JSON.parse(body);
       var dataArray = parsedBody.data;
       for (var i = 0; i < dataArray.length; i++) {
-        // console.log('time after start:', dataArray[i].created_time - startTime, 'and time before end:', endTime - dataArray[i].created_time)
         if (dataArray[i].created_time < endTime) {
           if (dataArray[i].created_time > startTime) {
-            // console.log('internal trigger');
             imageArray.push(dataArray[i]);
           } else {
             endOfRequest = true;
@@ -158,9 +145,7 @@ var queryInstagram = function queryInstagram(body, cb) {
   recursiveQuery(apiQuery);
 }
 
-
 module.exports = {
-  // viewDatabase,
   addCollection,
   getCollections,
   deleteCollections,
