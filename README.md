@@ -15,13 +15,15 @@ Currently deployed on [heroku!](https://boiling-headland-4189.herokuapp.com)
 
 ##Underneath the hood:
 - Front-end built with React.js for fast rendering/re-rendering of the webapp and for enforcing clean, modular code
+- Pagination results cached ahead of call for performance
 - Single source of truth/single state for clarity, with data and callbacks passed down via props
 - User-login data never sent to nor stored on server, only bare minimum stored on server for the purpose of saving the user's collections
 - Back-end built with Node/Express, with data stored in MongoDB
 - To prevent overly expensive API calls for searches within a date range, API calls are limited to a set number, currently set to a lower number just to not waste API calls. When that limit is hit, server suggests a new date range for the query
 
 ##Component structure:
-```- App (app.jsx)
+```
+- App (app.jsx)
   - 'home' view
     - LoginButton (/components/LoginButton)
     - SearchQuery (/components/SearchQuery)
