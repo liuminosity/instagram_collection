@@ -20,7 +20,6 @@
     "watchify": "^3.5.0"
   },
   "scripts": {
-    "build": "gulp",
     "start": "node server/server.js"
   }
 }
